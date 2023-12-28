@@ -1,10 +1,43 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Text.RegularExpressions;
 
 namespace calculator
 {
     class Program
     {
+        // Asks until the input is correctly formatted
+        static int InputInt()
+        {
+            int answer;
+            bool res;
+            while (true)
+            {
+                string tmp = Console.ReadLine();
+                res = int.TryParse(tmp, out answer);
+                if (res)
+                    break;
+                Console.WriteLine("integer input is not valid, try again");
+            }
+            return answer;
+        }
+
+        // Asks until the input is correctly formatted (accepts x and h too)
+        static string InputOperator()
+        {
+            while (true)
+            {
+                string tmp = Console.ReadLine();
+                string pattern = @"[+\-*\/hx]";
+                if(Regex.IsMatch(tmp, pattern) && tmp.Length==1)
+                {
+                    return tmp; 
+                }
+                Console.WriteLine("Input is invalid, try again.");
+            }
+        }
+
+
         static void Main(string[] args)
         {
             // Välkomnande meddelande
@@ -24,31 +57,36 @@ namespace calculator
             int answer = 0;
             List<int> history = new List<int>();
 
-            Console.WriteLine("Every time your enter an input, press enter to execute");
-            Console.WriteLine("When you want to see the result press =");
-            Console.WriteLine("If you want to exit in any moment, press x");
-            Console.WriteLine("If you want the history press h");
-            
-            answer = Int32.Parse (Console.ReadLine());
-                        
-            while(true)
+            Console.WriteLine("Every time your enter an input (numer or operator), press enter to execute");
+            Console.WriteLine("If you want to exit input 'x'");
+            Console.WriteLine("If you want to see the history of answers input 'h'");
+
+            // We enter the inputs alternating between number and operator, so we only need two variables for that.
+            // The only other variable we need is for storing the answers.
+            // We input the first number into the variable 'answer' and use that for the next calculations.
+
+            answer = InputInt();
+
+            while (true)
             {
-                input2 = Console.ReadLine();
+                input2 = InputOperator();
+                // I assume we only make a choice of 'h' or 'x' when we are at the beginning of our calculation, not in the middle of it.
                 if (input2.ToLower() == "h")
                 {
-                   foreach( int number in history)
+                    foreach ( int number in history)
                     {
                         Console.Write(number + " ");
-                         
+
                     }
-                  
+                    Console.WriteLine("");
+                    continue;
                 }
                 if(input2.ToLower() == "x")
                 {
                     break;    
                 }
 
-                input3 = Int32.Parse(Console.ReadLine());
+                input3 = InputInt();
 
                 switch(input2) 
                 {
@@ -65,16 +103,19 @@ namespace calculator
                         break;
 
                     case "/":
+                        if (input3 == 0)
+                        {
+                            Console.WriteLine("Invalid calculation, cannot divide by zero");
+                            break;
+                        }
                         answer = answer / input3;
-
+                       
                         break;
                 }
                 history.Add(answer); 
                 Console.WriteLine($"= {answer}" );
             }
 
-
-            Console.ReadLine();
         }
     }
 }
