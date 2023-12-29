@@ -57,6 +57,7 @@ namespace calculator
             int answer = 0;
             List<int> history = new List<int>();
 
+            Console.WriteLine("Welcome to the calculator");
             Console.WriteLine("Every time your enter an input (numer or operator), press enter to execute");
             Console.WriteLine("If you want to exit input 'x'");
             Console.WriteLine("If you want to see the history of answers input 'h'");
