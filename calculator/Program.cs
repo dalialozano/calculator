@@ -29,9 +29,9 @@ namespace calculator
             {
                 string tmp = Console.ReadLine();
                 string pattern = @"[+\-*\/hx]";
-                if(Regex.IsMatch(tmp, pattern) && tmp.Length==1)
+                if (Regex.IsMatch(tmp, pattern) && tmp.Length == 1)
                 {
-                    return tmp; 
+                    return tmp;
                 }
                 Console.WriteLine("Input is invalid, try again.");
             }
@@ -51,8 +51,8 @@ namespace calculator
             // Visa tidigare resultat
             // Fråga användaren om den vill avsluta eller fortsätta
 
-        
-            string input2= "";
+
+            string input2 = "";
             int input3;
             int answer = 0;
             List<int> history = new List<int>();
@@ -74,7 +74,7 @@ namespace calculator
                 // I assume we only make a choice of 'h' or 'x' when we are at the beginning of our calculation, not in the middle of it.
                 if (input2.ToLower() == "h")
                 {
-                    foreach ( int number in history)
+                    foreach (int number in history)
                     {
                         Console.Write(number + " ");
 
@@ -82,14 +82,14 @@ namespace calculator
                     Console.WriteLine("");
                     continue;
                 }
-                if(input2.ToLower() == "x")
+                if (input2.ToLower() == "x")
                 {
-                    break;    
+                    break;
                 }
 
                 input3 = InputInt();
 
-                switch(input2) 
+                switch (input2)
                 {
                     case "*":
                         answer = answer * input3;
@@ -110,11 +110,11 @@ namespace calculator
                             break;
                         }
                         answer = answer / input3;
-                       
+
                         break;
                 }
-                history.Add(answer); 
-                Console.WriteLine($"= {answer}" );
+                history.Add(answer);
+                Console.WriteLine($"= {answer}");
             }
 
         }
